@@ -1,26 +1,62 @@
 # codealpha_tasks
-TASKS ON PYTHON PROGRAMMING:
-✅ TASK 1: Hangman Game 
-Goal: Create a simple text-based Hangman game where the player guesses a word one letter at a time. 
-Simplified Scope: 
-● Use a small list of 5 predefined words (no need to use a file or API). 
-● Limit incorrect guesses to 6. 
-● Basic console input/output — no graphics or audio. 
-Key Concepts Used: random, while loop, if-else, strings, lists.
+import random
 
-✅ TASK 2: Stock Portfolio Tracker 
-● Goal: Build a simple stock tracker that calculates total investment based on manually defined stock 
-prices. 
-● Simplified Scope: 
-○ User inputs stock names and quantity. 
-○ Use a hardcoded dictionary to define stock prices (e.g., {"AAPL": 180, "TSLA": 250}). 
-○ Display total investment value and optionally save the result in a .txt or .csv file. 
-● Key Concepts Used: dictionary, input/output, basic arithmetic, file handling 
-(optional).
+def hangman_game():
+   
+    words = ["python", "hangman", "computer", "programming", "keyboard"]
+    
+    
+    secret_word = random.choice(words).lower()
+    word_letters = set(secret_word) 
+    guessed_letters = set()
+    incorrect_guesses = 0
+    max_incorrect = 6
+    
+    print("Welcome to Hangman!")
+    print("Guess the word one letter at a time. You have 6 incorrect guesses allowed.")
+    print(f"Word length: {len(secret_word)} letters\n")
+    
+   
+    while incorrect_guesses < max_incorrect and len(word_letters) > 0:
+      
+        display_word = ""
+        for letter in secret_word:
+            if letter in guessed_letters:
+                display_word += letter + " "
+            else:
+                display_word += "_ "
+        print(display_word)
+        print(f"Incorrect guesses left: {max_incorrect - incorrect_guesses}")
+        print(f"Guessed letters: {' '.join(sorted(guessed_letters))}\n")
+        
+    
+        guess = input("Enter a letter: ").lower().strip()
+        
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single letter!\n")
+            continue
+        
+        if guess in guessed_letters:
+            print("You already guessed that letter!\n")
+            continue
+        
+        
+        guessed_letters.add(guess)
+        
+        if guess in word_letters:
+            word_letters.discard(guess)
+            print("Good guess!\n")
+        else:
+            incorrect_guesses += 1
+            print("Wrong guess!\n")
+    
+    print("\n" + "="*30)
+    if incorrect_guesses < max_incorrect:
+        print("Congratulations! You won!")
+    else:
+        print("Game Over! You lost.")
+    print(f"The word was: {secret_word}")
+    print("="*30)
 
-✅ TASK 3: Basic Chatbot 
-Goal: Build a simple rule-based chatbot. 
-Scope: 
-● Input from user like: "hello", "how are you", "bye". 
-● Predefined replies like: "Hi!", "I'm fine, thanks!", "Goodbye!". 
-Key Concepts Used: if-elif, functions, loops, input/output.
+if __name__ == "__main__":
+    hangman_game()
