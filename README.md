@@ -1,6 +1,4 @@
-# codealpha_tasks
 import random
-
 def hangman_game():
    
     words = ["python", "hangman", "computer", "programming", "keyboard"]
